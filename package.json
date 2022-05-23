@@ -13,7 +13,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seqU": "sequelize db:migrate:undo && sequelize db:migrate"
+    "seqUmi": "sequelize db:migrate:undo && sequelize db:migrate",
+    "seqU": "sequelize db:drop && sequelize db:create"
   },
   "keywords": [],
   "author": "",

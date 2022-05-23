@@ -7,9 +7,11 @@ const app = express();
 const port = process.env.PORT || 8000;
 const notFoundMiddleware = require('./middlewares/notFound');
 const errorMiddleware = require('./middlewares/error');
-if (process.env.NODE_ENV === 'DEVELOPMENT') {
+if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+const { sequelize } = require('./models/index');
+sequelize.sync({ force: true });
 
 app.use(cors());
 app.use(express.json());
