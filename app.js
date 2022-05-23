@@ -10,12 +10,17 @@ const errorMiddleware = require('./middlewares/error');
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-const { sequelize } = require('./models/index');
-sequelize.sync({ force: true });
+const authRouter = require('./routes/authRoutes');
+// ----------------------------- Sync to create database -----------------------------
+// const { sequelize } = require('./models/index');
+// sequelize.sync({ force: true });
+// ----------------------------- Sync to create database -----------------------------
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use('/auth', authRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
