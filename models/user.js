@@ -26,64 +26,35 @@ module.exports = (sequelize, DataTypes) => {
       phoneNumber: {
         type: DataTypes.STRING,
         unique: true,
+        allowNull: false,
       },
-
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
       },
-      profilePic: DataTypes.STRING,
-      coverPhoto: DataTypes.STRING,
+      address: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
+      addressDescription: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
     },
 
     { underscored: true }
   );
   User.associate = (models) => {
-    User.hasMany(models.Post, {
+    User.hasMany(models.Order, {
       foreignKey: {
         name: 'userId',
         allowNull: false,
       },
-      onUpdate: 'RESTRICT',
-      onDelete: 'RESTRICT',
-    });
-
-    User.hasMany(models.Comment, {
-      foreignKey: {
-        name: 'userId',
-        allowNull: false,
-      },
-      onUpdate: 'RESTRICT',
-      onDelete: 'RESTRICT',
-    });
-
-    User.hasMany(models.Like, {
-      foreignKey: {
-        name: 'userId',
-        allowNull: false,
-      },
-      onUpdate: 'RESTRICT',
-      onDelete: 'RESTRICT',
-    });
-
-    User.hasMany(models.Friend, {
-      as: 'RequestFrom',
-      foreignKey: {
-        name: 'requestToFromId',
-        allowNull: false,
-      },
-      onUpdate: 'RESTRICT',
-      onDelete: 'RESTRICT',
-    });
-
-    User.hasMany(models.Friend, {
-      as: 'RequestTo',
-      foreignKey: {
-        name: 'requestToId',
-        allowNull: false,
-      },
-      onUpdate: 'RESTRICT',
-      onDelete: 'RESTRICT',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
   };
 
