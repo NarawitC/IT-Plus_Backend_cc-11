@@ -1,3 +1,5 @@
+const { IN_CART, PENDING, CONFIRMED } = require('../config/constants');
+
 module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define(
     'Order',
@@ -16,13 +18,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       status: {
-        type: DataTypes.ENUM(
-          process.env.IN_CART,
-          process.env.PENDING,
-          process.env.CONFIRMED
-        ),
-        defaultValue: process.env.IN_CART,
+        type: DataTypes.ENUM(IN_CART, PENDING, CONFIRMED),
+        defaultValue: IN_CART,
         allowNull: false,
+      },
+      confirmedAdminId: {
+        type: DataTypes.INTEGER,
       },
     },
     { underscored: true }
@@ -42,6 +43,15 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: {
         name: 'userId',
         allowNull: false,
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+
+    Order.belongsTo(models.Admin, {
+      foreignKey: {
+        name: 'confirmedAdminId',
+        allowNull: true,
       },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',

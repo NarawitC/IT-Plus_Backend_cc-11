@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'Admin',
     {
       employeeId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         validate: {
@@ -28,6 +28,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     { underscored: true }
   );
+
+  Admin.associate = (models) => {
+    Admin.hasMany(models.Order, {
+      foreignKey: {
+        name: 'confirmedAdminId',
+        allowNull: true,
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+  };
 
   return Admin;
 };
