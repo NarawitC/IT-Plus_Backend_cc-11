@@ -10,7 +10,7 @@ const errorMiddleware = require('./middlewares/error');
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-const userRouter = require('./routes/userRoutes');
+const clientRouter = require('./routes/clientRoutes');
 const adminRouter = require('./routes/adminRoutes');
 // ----------------------------- Sync to create database -----------------------------
 // const { sequelize } = require('./models/index');
@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/', userRouter);
+app.use('/client', clientRouter);
 app.use('/admin', adminRouter);
 
 app.use(notFoundMiddleware);

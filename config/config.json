@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "narawit135",
-    "database": "IT_Shop_database",
+    "password": "",
+    "database": "",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "timezone": "+07:00"
