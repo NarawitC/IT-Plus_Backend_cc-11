@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Product = sequelize.define("Product", {
+  const Product = sequelize.define('Product', {
     productName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     subPicture3: DataTypes.STRING,
     subPicture4: DataTypes.STRING,
 
-    status: DataTypes.ENUM("PENDING", "APPROVED", "HIDDEN", "REJECT"),
+    status: DataTypes.ENUM('PENDING', 'APPROVED', 'HIDDEN', 'REJECT'),
 
     rejectReason: {
       type: DataTypes.STRING,
@@ -51,68 +51,68 @@ module.exports = (sequelize, DataTypes) => {
   Product.associate = (models) => {
     Product.hasMany(models.CartItems, {
       foreignKey: {
-        name: "productId",
+        name: 'productId',
         allowNull: false,
       },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
     Product.hasMany(models.Promotion, {
       foreignKey: {
-        name: "productId",
+        name: 'productId',
         allowNull: false,
       },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
     Product.hasMany(models.OrderItems, {
       foreignKey: {
-        name: "productId",
+        name: 'productId',
         allowNull: false,
       },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
     Product.hasMany(models.Property, {
       foreignKey: {
-        name: "productId",
+        name: 'productId',
         allowNull: false,
       },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
     Product.belongsTo(models.Supplier, {
       foreignKey: {
-        name: "supplierId",
+        name: 'supplierId',
         allowNull: false,
       },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
     Product.belongsTo(models.Category, {
       foreignKey: {
-        name: "categoryId",
+        name: 'categoryId',
         allowNull: false,
       },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
     Product.belongsTo(models.Subcategory, {
       foreignKey: {
-        name: "subCategoryId",
+        name: 'subCategoryId',
         allowNull: false,
       },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
 
-    Product.belongsTo(models.ChangeStatusAdmin, {
+    Product.belongsTo(models.Admin, {
       foreignKey: {
-        name: "ChangeStatusAdminId",
+        name: 'ChangeStatusAdminId',
         allowNull: false,
       },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
   };
 
