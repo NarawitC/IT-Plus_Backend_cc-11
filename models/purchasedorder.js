@@ -1,15 +1,14 @@
-import { PURCHASED_ORDER_STATUS } from '../config/constants';
+const { PURCHASED_ORDER_STATUS } = require('../config/constants');
 
 module.exports = (sequelize, DataTypes) => {
   const PurchasedOrder = sequelize.define(
     'PurchasedOrder',
     {
       status: {
-        type: DataTypes.ENUM,
-        values: [
+        type: DataTypes.ENUM(
           PURCHASED_ORDER_STATUS.PENDING,
-          PURCHASED_ORDER_STATUS.CONFIRMED,
-        ],
+          PURCHASED_ORDER_STATUS.CONFIRMED
+        ),
         allowNull: false,
         defaultValue: PURCHASED_ORDER_STATUS.PENDING,
         validate: {
@@ -24,6 +23,8 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
+
+      // Todo wait for omise research
       transactionId: {
         type: DataTypes.STRING,
         allowNull: false,

@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       endedAt: {
         type: DataTypes.DATE,
         allowNull: false,
-
         validate: {
           notEmpty: true,
         },

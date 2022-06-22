@@ -13,8 +13,8 @@ if (process.env.NODE_ENV === 'development') {
 const clientRouter = require('./routes/clientRoutes');
 const adminRouter = require('./routes/adminRoutes');
 // ----------------------------- Sync to create database -----------------------------
-// const { sequelize } = require('./models/index');
-// sequelize.sync({ force: true });
+const { sequelize } = require('./models/index');
+sequelize.sync({ force: true });
 // ----------------------------- Sync to create database -----------------------------
 
 app.use(cors());

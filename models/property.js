@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Property = sequelize.define("Property", {
+  const Property = sequelize.define('Property', {
     topic: {
       type: DataTypes.STRING(30),
       allowNull: false,
@@ -8,18 +8,21 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     description: {
-      type: DataTypes.STRING(2000),
+      type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
   });
   Property.associate = (models) => {
     Property.belongsTo(models.Product, {
       foreignKey: {
-        name: "productId",
+        name: 'productId',
         allowNull: false,
       },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     });
   };
   return Property;

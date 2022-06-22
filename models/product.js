@@ -1,3 +1,4 @@
+const { PRODUCT_STATUS } = require('../config/constants');
 module.exports = (sequelize, DataTypes) => {
   const Product = sequelize.define('Product', {
     productName: {
@@ -8,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     price: {
-      type: DataTypes.INTIGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -21,7 +22,9 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
-    description: DataTypes.STRING(400),
+    description: {
+      type: DataTypes.STRING(400),
+    },
 
     stock: {
       type: DataTypes.INTEGER,
@@ -31,13 +34,35 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
 
-    mainPicture: DataTypes.STRING,
-    subPicture1: DataTypes.STRING,
-    subPicture2: DataTypes.STRING,
-    subPicture3: DataTypes.STRING,
-    subPicture4: DataTypes.STRING,
+    mainPicture: {
+      type: DataTypes.STRING,
+    },
 
-    status: DataTypes.ENUM('PENDING', 'APPROVED', 'HIDDEN', 'REJECT'),
+    subPicture1: {
+      type: DataTypes.STRING,
+    },
+    subPicture2: {
+      type: DataTypes.STRING,
+    },
+    subPicture3: {
+      type: DataTypes.STRING,
+    },
+    subPicture4: {
+      type: DataTypes.STRING,
+    },
+
+    status: {
+      type: DataTypes.ENUM(
+        PRODUCT_STATUS.PENDING,
+        PRODUCT_STATUS.APPROVED,
+        PRODUCT_STATUS.REJECTED,
+        PRODUCT_STATUS.HIDDEN
+      ),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
 
     rejectReason: {
       type: DataTypes.STRING,
@@ -109,7 +134,7 @@ module.exports = (sequelize, DataTypes) => {
     Product.belongsTo(models.Admin, {
       foreignKey: {
         name: 'ChangeStatusAdminId',
-        allowNull: false,
+        allowNull: true,
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
