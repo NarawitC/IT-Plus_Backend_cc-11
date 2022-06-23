@@ -7,11 +7,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: true,
+          isInt: true,
         },
       },
       discount: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        defaultValue: 0,
         validate: {
           notEmpty: true,
           isInt: true,

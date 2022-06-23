@@ -2,11 +2,12 @@ module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define(
     'Order',
     {
-      productPice: {
+      productPrice: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notEmpty: true,
+          isInt: true,
         },
       },
       deliveryAddress: {
@@ -21,13 +22,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: true,
+          isInt: true,
         },
       },
     },
     { underscored: true }
   );
   Order.associate = (models) => {
-    Order.hasMany(models.OrderItems, {
+    Order.hasMany(models.OrderItem, {
       foreignKey: 'orderId',
       allowNull: false,
       onDelete: 'CASCADE',

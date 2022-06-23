@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Supplier = sequelize.define(
     'Supplier',
     {
-      disPlayName: {
+      displayName: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       profilePhoto: {
         type: DataTypes.STRING,
       },
-      lineID: {
+      lineId: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
@@ -43,6 +43,12 @@ module.exports = (sequelize, DataTypes) => {
     { underscored: true }
   );
   Supplier.associate = (models) => {
+    Supplier.hasMany(models.Product, {
+      foreignKey: 'supplierId',
+      allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
     Supplier.belongsTo(models.User, {
       foreignKey: 'userId',
       allowNull: false,

@@ -1,3 +1,4 @@
+const { USER_ROLE } = require('../config/constants');
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
@@ -38,6 +39,13 @@ module.exports = (sequelize, DataTypes) => {
       address: {
         type: DataTypes.STRING,
         defaultValue: null,
+      },
+      role: {
+        type: DataTypes.ENUM(USER_ROLE.CLIENT, USER_ROLE.SUPPLIER),
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
       },
     },
 

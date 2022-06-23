@@ -1,25 +1,29 @@
 module.exports = (sequelize, DataTypes) => {
-  const Subcategory = sequelize.define('subCategory', {
-    subCategoryName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
+  const SubCategory = sequelize.define(
+    'SubCategory',
+    {
+      subCategoryName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
       },
     },
-  });
+    { underscored: true }
+  );
 
-  Subcategory.associate = (models) => {
-    Subcategory.belongsTo(models.Category, {
+  SubCategory.associate = (models) => {
+    SubCategory.belongsTo(models.Category, {
       foreignKey: {
-        name: 'CategoryId',
+        name: 'categoryId',
         allowNull: false,
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     });
 
-    Subcategory.hasMany(models.Product, {
+    SubCategory.hasMany(models.Product, {
       foreignKey: {
         name: 'subCategoryId',
         allowNull: false,
@@ -28,5 +32,5 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
   };
-  return Subcategory;
+  return SubCategory;
 };

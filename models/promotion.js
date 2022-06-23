@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: true,
+          isInt: true,
         },
       },
       startedAt: {
@@ -28,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     { underscored: true }
   );
   Promotion.associate = (models) => {
-    Promotion.hasMany(models.OrderItems, {
+    Promotion.hasMany(models.OrderItem, {
       foreignKey: 'promotionId',
       allowNull: true,
       onDelete: 'CASCADE',
