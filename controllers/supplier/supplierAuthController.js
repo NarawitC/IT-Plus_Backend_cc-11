@@ -99,3 +99,29 @@ exports.supplierSignUp = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.supplierSignIn = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({
+      where: { email },
+    });
+
+    if (!user) {
+      createError('Invalid credential', 400);
+    }
+
+    const isMatch = await bcryptjs.compare(password, user.password);
+    if (!isMatch) {
+      createError('Invalid credential', 400);
+    }
+
+    const token = genToken({ userId: user.id, role: user.role });
+    res.json({
+      message: 'Supplier signed in successfully',
+      token,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
