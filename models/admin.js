@@ -24,10 +24,8 @@ module.exports = (sequelize, DataTypes) => {
           ADMIN_ROLE.ORDER_ADMIN,
           ADMIN_ROLE.CLIENT_ADMIN
         ),
+        defaultValue: ADMIN_ROLE.SUPER_ADMIN,
         allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
       },
     },
     { underscored: true }
