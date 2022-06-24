@@ -23,7 +23,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('user', userRouter);
+app.use('', (req, res, next) => {
+  console.log(req.url);
+  next();
+});
+
+app.use('/user', userRouter);
 app.use('/client', clientRouter);
 app.use('/supplier', supplierRouter);
 app.use('/admin', adminRouter);

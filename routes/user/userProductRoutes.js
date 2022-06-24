@@ -5,9 +5,21 @@ const userProductController = require('../../controllers/user/userProductControl
 
 router.get('/', userProductController.getAllProduct);
 router.get('/:productId', userProductController.getProductById);
-router.get('/:categoryId', userProductController.getProductByCategoryId);
-router.get('/:subCategoryId', userProductController.getProductBySubCategoryId);
-router.get('/:searchText', userProductController.getProductBySearchText);
-router.get('/:searchBrand', userProductController.getProductByBrand);
+router.get(
+  '/category/:categoryId',
+  userProductController.getProductByCategoryId
+);
+router.get(
+  '/subcategory/:subCategoryId',
+  userProductController.getProductBySubCategoryId
+);
+router.get(
+  '/search-text/:searchText',
+  userProductController.getProductBySearchText
+);
+router.get(
+  '/search-brand/:searchBrand',
+  userProductController.getProductByBrand
+);
 
 module.exports = router;
