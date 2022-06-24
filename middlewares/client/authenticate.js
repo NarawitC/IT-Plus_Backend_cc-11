@@ -18,8 +18,7 @@ exports.clientAuthenticate = async (req, res, next) => {
     const user = await User.findOne({
       attributes: { exclude: ['password'] },
 
-      where: { id: payload.clientId, role: payload.role },
-
+      where: { id: payload.userId, role: payload.role },
     });
     if (!user) {
       createError('You are unauthorized', 401);
