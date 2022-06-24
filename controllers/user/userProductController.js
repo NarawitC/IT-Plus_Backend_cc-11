@@ -12,7 +12,7 @@ exports.getAllProduct = async (req, res, next) => {
       ],
     });
     res.status(200).json({
-      meessage: 'Get all product successfully',
+      message: 'Get all product successfully',
       products,
     });
   } catch (err) {
@@ -20,7 +20,7 @@ exports.getAllProduct = async (req, res, next) => {
   }
 };
 
-exports.getPropductById = async (req, res, next) => {
+exports.getProductById = async (req, res, next) => {
   try {
     const { productId } = req.params;
     const product = await Product.findOne({
@@ -40,7 +40,7 @@ exports.getPropductById = async (req, res, next) => {
   }
 };
 
-exposts.getProductByCategory = async (req, res, next) => {
+exports.getProductByCategoryId = async (req, res, next) => {
   try {
     const { categoryId } = req.params;
     const products = await Product.findAll({
@@ -49,7 +49,7 @@ exposts.getProductByCategory = async (req, res, next) => {
       include: [{ model: Category }],
     });
     res.status(200).json({
-      meessage: 'Get all product successfully',
+      message: 'Get all product successfully',
       products,
     });
   } catch (err) {
@@ -57,7 +57,7 @@ exposts.getProductByCategory = async (req, res, next) => {
   }
 };
 
-exposts.getProductBySubCategory = async (req, res, next) => {
+exports.getProductBySubCategoryId = async (req, res, next) => {
   try {
     const { subCategoryId } = req.params;
     const products = await Product.findAll({
@@ -66,7 +66,7 @@ exposts.getProductBySubCategory = async (req, res, next) => {
       include: [{ model: SubCategory }],
     });
     res.status(200).json({
-      meessage: 'Get all product successfully',
+      message: 'Get all product successfully',
       products,
     });
   } catch (err) {
@@ -74,7 +74,7 @@ exposts.getProductBySubCategory = async (req, res, next) => {
   }
 };
 
-exposts.getProductBySearchText = async (req, res, next) => {
+exports.getProductBySearchText = async (req, res, next) => {
   try {
     const { searchText } = req.params;
     const products = await Product.findAll({
@@ -82,14 +82,15 @@ exposts.getProductBySearchText = async (req, res, next) => {
       order: [['name', 'ASC']],
     });
     res.status(200).json({
-      meessage: 'Get all product by text successfully',
+      message: 'Get all product by text successfully',
       products,
     });
   } catch (err) {
     next(err);
   }
 };
-exposts.getProductByBrand = async (req, res, next) => {
+
+exports.getProductByBrand = async (req, res, next) => {
   try {
     const { searchBrand } = req.params;
     const products = await Product.findAll({
@@ -97,7 +98,7 @@ exposts.getProductByBrand = async (req, res, next) => {
       order: [['name', 'ASC']],
     });
     res.status(200).json({
-      meessage: 'Get all product by brand successfully',
+      message: 'Get all product by brand successfully',
       products,
     });
   } catch (err) {

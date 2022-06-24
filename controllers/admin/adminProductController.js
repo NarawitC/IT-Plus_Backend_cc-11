@@ -6,7 +6,7 @@ exports.getAllProduct = async (req, res, next) => {
       order: [['name', 'ASC']],
     });
     res.status(200).json({
-      meessage: 'Get all product successfully',
+      message: 'Get all product successfully',
       products,
     });
   } catch (err) {
