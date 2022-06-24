@@ -60,6 +60,7 @@ exports.clientSignUp = async (req, res, next) => {
       message: 'Client created successfully',
     });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };
