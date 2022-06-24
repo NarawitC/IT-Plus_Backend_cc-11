@@ -120,7 +120,6 @@ exports.createProduct = async (req, res, next) => {
 exports.getAllProductBySupplierId = async (req, res, next) => {
   try {
     const { id: supplierId } = req.supplier;
-    console.log('first');
     const products = await Product.findAll({
       where: {
         supplierId,
