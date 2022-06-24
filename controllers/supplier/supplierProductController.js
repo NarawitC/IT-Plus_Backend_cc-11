@@ -1,7 +1,7 @@
 const validator = require('validator');
 const fs = require('fs');
 
-const { Product } = require('../../models');
+const { Product, Category, SubCategory } = require('../../models');
 const cloudinary = require('../../utils/cloundinary');
 const createError = require('../../utils/createError');
 
@@ -119,10 +119,8 @@ exports.createProduct = async (req, res, next) => {
 
 exports.getAllProductBySupplierId = async (req, res, next) => {
   try {
-    const {
-      supplier: { id: supplierId },
-    } = req.body;
-
+    const { id: supplierId } = req.supplier;
+    console.log('first');
     const products = await Product.findAll({
       where: {
         supplierId,
