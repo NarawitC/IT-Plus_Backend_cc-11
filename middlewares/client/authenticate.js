@@ -17,12 +17,14 @@ exports.clientAuthenticate = async (req, res, next) => {
     const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const user = await User.findOne({
       attributes: { exclude: ['password'] },
+
       where: { id: payload.clientId, role: payload.role },
+
     });
     if (!user) {
       createError('You are unauthorized', 401);
     }
-    req.client = client;
+    req.client = user;
     next();
   } catch (err) {
     next(err);
