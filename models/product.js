@@ -63,9 +63,7 @@ module.exports = (sequelize, DataTypes) => {
           PRODUCT_STATUS.HIDDEN
         ),
         allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
+        defaultValue: PRODUCT_STATUS.PENDING,
       },
 
       rejectReason: {
