@@ -1,11 +1,4 @@
-const {
-  Order,
-  OderItem,
-  Product,
-  Category,
-  SubCategory,
-  Promotion,
-} = require('../../models');
+const { Product, Category, SubCategory, Promotion } = require('../../models');
 
 exports.getAllProduct = async (req, res, next) => {
   try {

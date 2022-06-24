@@ -1,10 +1,5 @@
-const {
-  Property,
-  Product,
-  Category,
-  SubCategory,
-  Promotion,
-} = require('../../models');
+const { Product, Category, SubCategory, Promotion } = require('../../models');
+const { Op } = require('sequelize');
 
 exports.getAllProduct = async (req, res, next) => {
   try {
@@ -94,11 +89,11 @@ exposts.getProductBySearchText = async (req, res, next) => {
     next(err);
   }
 };
-exposts.getProductBySearchBrand = async (req, res, next) => {
+exposts.getProductByBrand = async (req, res, next) => {
   try {
-    const { searchText } = req.params;
+    const { searchBrand } = req.params;
     const products = await Product.findAll({
-      where: { brand: { [Op.like]: `%${searchText}%` } },
+      where: { brand: { [Op.like]: `%${searchBrand}%` } },
       order: [['name', 'ASC']],
     });
     res.status(200).json({
