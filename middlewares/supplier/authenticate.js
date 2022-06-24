@@ -16,12 +16,12 @@ exports.supplierAuthenticate = async (req, res, next) => {
     const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const user = await User.findOne({
       attributes: { exclude: ['password'] },
-      where: { id: payload.id, role: payload.role },
+      where: { id: payload.userId, role: payload.role },
     });
     if (!user) {
       createError('You are unauthorized', 401);
     }
-    req.supplier = supplier;
+    req.supplier = user;
     next();
   } catch (err) {
     next(err);

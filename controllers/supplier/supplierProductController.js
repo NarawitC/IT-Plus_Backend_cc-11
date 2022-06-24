@@ -1,13 +1,14 @@
 const validator = require('validator');
 const fs = require('fs');
 
+const { Product } = require('../../models');
 const cloudinary = require('../../utils/cloundinary');
 const createError = require('../../utils/createError');
 
 exports.createProduct = async (req, res, next) => {
   try {
+    const { id: supplierId } = req.supplier;
     const {
-      supplier:{id:supplierId},
       brand,
       productName,
       description,
@@ -16,7 +17,7 @@ exports.createProduct = async (req, res, next) => {
       categoryId = 1,
       subCategoryId = 1,
     } = req.body;
-    
+
     const imageUrl = {};
     if (req.files) {
       if (req.files.mainPicture) {
@@ -41,7 +42,7 @@ exports.createProduct = async (req, res, next) => {
         imageUrl.subPicture4 = result.secure_url;
       }
     }
-    if(!brand){
+    if (!brand) {
       createError('Brand is required', 400);
     }
     if (!productName) {
@@ -116,34 +117,30 @@ exports.createProduct = async (req, res, next) => {
   }
 };
 
-
 exports.getAllProductBySupplierId = async (req, res, next) => {
   try {
     const {
-      supplier:{id:supplierId},
+      supplier: { id: supplierId },
     } = req.body;
 
     const products = await Product.findAll({
       where: {
         supplierId,
+      },
+      include: [
+        {
+          model: Category,
         },
-        include: [
-          {
-            model: Category,
-          },
-          {
-            model: SubCategory,
-          },
-        ],
-      });
+        {
+          model: SubCategory,
+        },
+      ],
+    });
 
-
-    res.status(200).json(
-      {
-        message: 'Product list retrieved successfully',
-        products,
-      }
-    );
+    res.status(200).json({
+      message: 'Product list retrieved successfully',
+      products,
+    });
   } catch (err) {
     next(err);
   }
