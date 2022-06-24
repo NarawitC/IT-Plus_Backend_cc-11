@@ -1,9 +1,15 @@
-const { Product, Category, SubCategory, Promotion } = require('../../models');
+const {
+  Product,
+  Category,
+  SubCategory,
+  Promotion,
+  Property,
+} = require('../../models');
 
 exports.getAllProduct = async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      order: [['name', 'ASC']],
+      order: [['productName', 'ASC']],
       include: [
         { model: Category },
         { model: SubCategory },
