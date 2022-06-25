@@ -7,7 +7,9 @@ const createError = require('../../utils/createError');
 
 exports.createProduct = async (req, res, next) => {
   try {
-    const { id: supplierId } = req.supplier;
+    const {
+      Supplier: { id: supplierId },
+    } = req.user;
     const {
       brand,
       productName,
@@ -119,7 +121,9 @@ exports.createProduct = async (req, res, next) => {
 
 exports.getAllProductBySupplierId = async (req, res, next) => {
   try {
-    const { id: supplierId } = req.supplier;
+    const {
+      Supplier: { id: supplierId },
+    } = req.user;
     const products = await Product.findAll({
       where: {
         supplierId,
