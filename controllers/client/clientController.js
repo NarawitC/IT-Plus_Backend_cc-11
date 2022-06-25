@@ -6,7 +6,7 @@ exports.getClientInfo = async (req, res, next) => {
     const user = await User.findOne({
       attributes: {
         exclude: ['password'],
-        where: { id: req.client.id, role: USER_ROLE.CLIENT },
+        where: { id: req.user.id, role: USER_ROLE.CLIENT },
       },
     });
     if (!user) {
