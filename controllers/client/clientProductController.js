@@ -5,6 +5,7 @@ const {
   Promotion,
   Property,
 } = require('../../models');
+const { Op } = require('sequelize');
 
 exports.getAllProduct = async (req, res, next) => {
   try {
