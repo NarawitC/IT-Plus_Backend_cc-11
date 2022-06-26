@@ -137,7 +137,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Product.belongsTo(models.Admin, {
       foreignKey: {
-        name: 'ChangeStatusAdminId',
+        name: 'changeStatusAdminId',
         allowNull: true,
       },
       onUpdate: 'CASCADE',
