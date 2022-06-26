@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const subCategoryController = require('../../controllers/admin/adminSubCategoryController');
+const adminSubCategoryController = require('../../controllers/admin/adminSubCategoryController');
 
-router.post('/', subCategoryController.createSubCategory);
+router.post('/', adminSubCategoryController.createSubCategory);
 
 module.exports = router;
