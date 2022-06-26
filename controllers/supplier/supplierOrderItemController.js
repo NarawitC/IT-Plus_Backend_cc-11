@@ -8,6 +8,8 @@ const {
   OrderItem,
   Order,
   Promotion,
+  PurchasedOrder,
+  ShippingOrder,
 } = require('../../models');
 const { Op } = require('sequelize');
 
@@ -33,6 +35,8 @@ exports.getAllOrderItemsBySupplierId = async (req, res, next) => {
           model: Order,
           model: Product,
           model: Promotion,
+          model: PurchasedOrder,
+          model: ShippingOrder,
         },
       ],
     });
@@ -56,6 +60,8 @@ exports.getOrderItemsById = async (req, res, next) => {
           model: Order,
           model: Product,
           model: Promotion,
+          model: PurchasedOrder,
+          model: ShippingOrder,
         },
       ],
     });
