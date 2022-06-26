@@ -29,15 +29,14 @@ exports.getAllOrderItemsBySupplierId = async (req, res, next) => {
           [Op.in]: allProductIdBySupplierId.map((item) => item.id),
         },
       },
-
       include: [
         {
           model: Order,
-          model: Product,
-          model: Promotion,
-          model: PurchasedOrder,
-          model: ShippingOrder,
+          include: [
+            { model: PurchasedOrder, include: [{ model: ShippingOrder }] },
+          ],
         },
+        { model: Product, include: [{ model: Promotion }] },
       ],
     });
 
@@ -58,11 +57,11 @@ exports.getOrderItemsById = async (req, res, next) => {
       include: [
         {
           model: Order,
-          model: Product,
-          model: Promotion,
-          model: PurchasedOrder,
-          model: ShippingOrder,
+          include: [
+            { model: PurchasedOrder, include: [{ model: ShippingOrder }] },
+          ],
         },
+        { model: Product, include: [{ model: Promotion }] },
       ],
     });
 
