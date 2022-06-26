@@ -58,3 +58,34 @@ exports.approveProduct = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.rejectProduct = async (req, res, next) => {
+  try {
+    const { id: changeStatusAdminId } = req.admin;
+    const { productId } = req.params;
+    const { rejectReason } = req.body;
+    if (!rejectReason) {
+      res.status(400).json({
+        message: 'Reject reason is required',
+      });
+    }
+    const product = await Product.findOne({
+      where: { id: productId },
+    });
+    if (product.status === PRODUCT_STATUS.PENDING) {
+      product.status = PRODUCT_STATUS.REJECTED;
+      product.changeStatusAdminId = changeStatusAdminId;
+      product.rejectReason = rejectReason;
+      await product.save();
+      res.status(200).json({
+        message: 'Reject product successfully',
+      });
+    } else {
+      res.status(400).json({
+        message: 'Product is already rejected',
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
