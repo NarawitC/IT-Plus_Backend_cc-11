@@ -10,7 +10,7 @@ const {
   ShippingOrder,
 } = require('../../models');
 
-exports.supplierGetAllOrder = async (req, res, next) => {
+exports.getAllOrder = async (req, res, next) => {
   try {
     const {
       Supplier: { id: supplierId },
@@ -36,7 +36,7 @@ exports.supplierGetAllOrder = async (req, res, next) => {
   }
 };
 
-exports.supplierGetOrderById = async (req, res, next) => {
+exports.getOrderById = async (req, res, next) => {
   try {
     const { id } = req.params;
 
