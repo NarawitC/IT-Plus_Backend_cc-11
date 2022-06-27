@@ -48,6 +48,12 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
+    Order.belongsTo(models.Supplier, {
+      foreignKey: 'supplierId',
+      allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
   return Order;
 };
