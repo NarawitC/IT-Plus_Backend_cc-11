@@ -3,7 +3,7 @@ const router = express.Router();
 
 const clientProductController = require('../../controllers/client/clientProductController');
 
-router.get('/', clientProductController.getAllProduct);
+router.get('/', clientProductController.getApprovedProduct);
 
 router.get('/:productId', clientProductController.getProductById);
 router.get(
@@ -13,14 +13,6 @@ router.get(
 router.get(
   '/subcategory/:subCategoryId',
   clientProductController.getProductBySubCategoryId
-);
-router.get(
-  '/search-text/:searchText',
-  clientProductController.getProductBySearchText
-);
-router.get(
-  '/search-brand/:searchBrand',
-  clientProductController.getProductByBrand
 );
 
 module.exports = router;

@@ -1,3 +1,4 @@
+const { PRODUCT_STATUS } = require('../../config/constants');
 const {
   Product,
   Category,
@@ -7,20 +8,33 @@ const {
 } = require('../../models');
 const { Op } = require('sequelize');
 
-exports.getAllProduct = async (req, res, next) => {
+exports.getApprovedProduct = async (req, res, next) => {
   try {
+    const { searchText = '', page = 1, supplierId = true } = req.query;
+    const limit = 20;
+    const offset = (page - 1) * limit;
+
     const products = await Product.findAll({
+      where: {
+        productName: { [Op.like]: `%${searchText}%` },
+        status: PRODUCT_STATUS.APPROVED,
+        supplierId,
+      },
       order: [['productName', 'ASC']],
+      offset,
+      limit,
       include: [
         { model: Category },
         { model: SubCategory },
-        { model: Property },
         { model: Promotion },
       ],
     });
+
+    const totalPage = Math.ceil(products.length / limit);
     res.status(200).json({
-      message: 'Get all product successfully',
+      message: 'Get all approved product successfully',
       products,
+      totalPage,
     });
   } catch (err) {
     next(err);
@@ -49,15 +63,33 @@ exports.getProductById = async (req, res, next) => {
 
 exports.getProductByCategoryId = async (req, res, next) => {
   try {
+    const { searchText = '', page = 1, supplierId = true } = req.query;
+    const limit = 20;
+    const offset = (page - 1) * limit;
+
     const { categoryId } = req.params;
     const products = await Product.findAll({
-      where: { categoryId },
+      where: {
+        productName: { [Op.like]: `%${searchText}%` },
+        status: PRODUCT_STATUS.APPROVED,
+        categoryId,
+        supplierId,
+      },
       order: [['productName', 'ASC']],
-      include: [{ model: Category }],
+      offset,
+      limit,
+      include: [
+        { model: Category },
+        { model: SubCategory },
+        { model: Promotion },
+      ],
     });
+
+    const totalPage = Math.ceil(products.length / limit);
     res.status(200).json({
       message: 'Get product by category id successfully',
       products,
+      totalPage,
     });
   } catch (err) {
     next(err);
@@ -66,49 +98,35 @@ exports.getProductByCategoryId = async (req, res, next) => {
 
 exports.getProductBySubCategoryId = async (req, res, next) => {
   try {
+    const { searchText = '', page = 1, supplierId = true } = req.query;
+    const limit = 20;
+    const offset = (page - 1) * limit;
+
     const { subCategoryId } = req.params;
     const products = await Product.findAll({
-      where: { subCategoryId },
+      where: {
+        productName: { [Op.like]: `%${searchText}%` },
+        status: PRODUCT_STATUS.APPROVED,
+        subCategoryId,
+        supplierId,
+      },
       order: [['productName', 'ASC']],
-      include: [{ model: SubCategory }],
+      offset,
+      limit,
+      include: [
+        { model: Category },
+        { model: SubCategory },
+        { model: Promotion },
+      ],
     });
+
+    const totalPage = Math.ceil(products.length / limit);
     res.status(200).json({
       message: 'Get product by sub category id successfully',
       products,
+      totalPage,
     });
   } catch (err) {
     next(err);
   }
-};
-
-exports.getProductBySearchText = async (req, res, next) => {
-  try {
-    const { searchText } = req.params;
-    const products = await Product.findAll({
-      where: { productName: { [Op.like]: `%${searchText}%` } },
-      order: [['productName', 'ASC']],
-    });
-    res.status(200).json({
-      message: 'Get all product by search text successfully',
-      products,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-exports.getProductByBrand = async (req, res, next) => {
-  try {
-    const { searchBrand } = req.params;
-    const products = await Product.findAll({
-      where: { brand: { [Op.like]: `%${searchBrand}%` } },
-      order: [['productName', 'ASC']],
-    });
-    res.status(200).json({
-      message: 'Get all product by brand successfully',
-      products,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+}
