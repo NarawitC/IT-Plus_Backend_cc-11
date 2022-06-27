@@ -8,11 +8,11 @@ router.get('/', clientProductController.getApprovedProduct);
 router.get('/:productId', clientProductController.getProductById);
 router.get(
   '/category/:categoryId',
-  clientProductController.getProductByCategoryId
+  clientProductController.getApprovedProductByCategoryId
 );
 router.get(
   '/subcategory/:subCategoryId',
-  clientProductController.getProductBySubCategoryId
+  clientProductController.getApprovedProductBySubCategoryId
 );
 
 module.exports = router;

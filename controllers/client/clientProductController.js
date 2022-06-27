@@ -64,7 +64,7 @@ exports.getProductById = async (req, res, next) => {
   }
 };
 
-exports.getProductByCategoryId = async (req, res, next) => {
+exports.getApprovedProductByCategoryId = async (req, res, next) => {
   try {
     const { searchText = '', page = 1, supplierId = true } = req.query;
     const limit = 20;
@@ -99,7 +99,7 @@ exports.getProductByCategoryId = async (req, res, next) => {
   }
 };
 
-exports.getProductBySubCategoryId = async (req, res, next) => {
+exports.getApprovedProductBySubCategoryId = async (req, res, next) => {
   try {
     const { searchText = '', page = 1, supplierId = true } = req.query;
     const limit = 20;
