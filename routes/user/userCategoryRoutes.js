@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const userCategoryController = require('../../controllers/user/userCategoryController');
+const clientCategoryController = require('../../controllers/client/clientCategoryController');
 
-router.get('/', userCategoryController.getAllCategory);
+router.get('/', clientCategoryController.getAllCategory);
 
 module.exports = router;
