@@ -1,7 +1,7 @@
 const validator = require('validator');
 const fs = require('fs');
 
-const { Product, Category, SubCategory } = require('../../models');
+const { Product, Category, SubCategory, Promotion } = require('../../models');
 const cloudinary = require('../../utils/cloundinary');
 const createError = require('../../utils/createError');
 
@@ -129,12 +129,11 @@ exports.getAllProductBySupplierId = async (req, res, next) => {
         supplierId,
       },
       include: [
-        {
-          model: Category,
-        },
-        {
-          model: SubCategory,
-        },
+        { model: Category },
+
+        { model: SubCategory },
+
+        { model: Promotion },
       ],
     });
 
