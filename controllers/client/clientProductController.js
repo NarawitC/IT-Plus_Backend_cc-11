@@ -5,6 +5,7 @@ const {
   SubCategory,
   Promotion,
   Property,
+  Supplier,
 } = require('../../models');
 const { Op } = require('sequelize');
 
@@ -47,9 +48,11 @@ exports.getProductById = async (req, res, next) => {
     const product = await Product.findOne({
       where: { id: productId },
       include: [
-        {
-          model: Promotion,
-        },
+        { model: Promotion },
+        { model: Category },
+        { model: SubCategory },
+        { model: Property },
+        { model: Supplier },
       ],
     });
     res.status(200).json({
@@ -129,4 +132,4 @@ exports.getProductBySubCategoryId = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-}
+};
