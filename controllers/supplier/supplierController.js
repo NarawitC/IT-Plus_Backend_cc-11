@@ -1,7 +1,7 @@
 const { User, Supplier } = require('../../models');
 const { USER_ROLE } = require('../../config/constants');
 
-exports.getSupplierInfo = async (req, res, next) => {
+exports.getMyInfo = async (req, res, next) => {
   try {
     const user = await User.findOne({
       attributes: {

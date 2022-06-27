@@ -3,7 +3,7 @@ const router = express.Router();
 
 const supplierAuthController = require('../../controllers/supplier/supplierAuthController');
 
-router.post('/sign-up', supplierAuthController.supplierSignUp);
-router.post('/sign-in', supplierAuthController.supplierSignIn);
+router.post('/sign-up', supplierAuthController.signUp);
+router.post('/sign-in', supplierAuthController.signIn);
 
 module.exports = router;

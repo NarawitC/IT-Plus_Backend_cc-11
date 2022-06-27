@@ -1,11 +1,4 @@
-const {
-  Product,
-  Category,
-  SubCategory,
-  Promotion,
-  Property,
-  Cart,
-} = require('../../models');
+const { Cart } = require('../../models');
 const { Op } = require('sequelize');
 
 exports.createCart = async (req, res, next) => {

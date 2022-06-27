@@ -1,7 +1,7 @@
 const { User, Client } = require('../../models');
 const { USER_ROLE } = require('../../config/constants');
 
-exports.getClientInfo = async (req, res, next) => {
+exports.getMyInfo = async (req, res, next) => {
   try {
     const user = await User.findOne({
       attributes: {
@@ -22,7 +22,7 @@ exports.getClientInfo = async (req, res, next) => {
   }
 };
 
-exports.updateClientInfo = async (req, res, next) => {
+exports.updateMyInfo = async (req, res, next) => {
   try {
     const {
       firstName,

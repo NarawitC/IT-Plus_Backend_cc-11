@@ -3,7 +3,7 @@ const router = express.Router();
 
 const clientController = require('../../controllers/client/clientController');
 
-router.get('/', clientController.getClientInfo);
-router.patch('/', clientController.updateClientInfo);
+router.get('/', clientController.getMyInfo);
+router.patch('/', clientController.updateMyInfo);
 
 module.exports = router;
