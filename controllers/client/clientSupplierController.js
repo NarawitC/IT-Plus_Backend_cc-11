@@ -72,7 +72,11 @@ exports.getApprovedProductByCategoryIdSupplierList = async (req, res, next) => {
   }
 };
 
-exports.getProductBySubCategoryIdSupplierList = async (req, res, next) => {
+exports.getApprovedProductBySubCategoryIdSupplierList = async (
+  req,
+  res,
+  next
+) => {
   try {
     const { searchText = '', supplierId = true } = req.query;
 

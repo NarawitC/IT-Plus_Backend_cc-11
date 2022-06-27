@@ -13,7 +13,7 @@ router.get(
 );
 router.get(
   '/approved-product-supplier-list/sub-category/:subCategoryId',
-  clientSupplierController.getProductBySubCategoryIdSupplierList
+  clientSupplierController.getApprovedProductBySubCategoryIdSupplierList
 );
 
 module.exports = router;
