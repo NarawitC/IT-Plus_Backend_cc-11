@@ -11,16 +11,20 @@ const { Op } = require('sequelize');
 
 exports.getApprovedProduct = async (req, res, next) => {
   try {
-    const { searchText = '', page = 1, supplierId = true } = req.query;
+    const { searchText, page = 1, supplierId } = req.query;
     const limit = 20;
     const offset = (page - 1) * limit;
 
+    const whereOption = { status: PRODUCT_STATUS.APPROVED };
+    if (supplierId) {
+      whereOption.supplierId = supplierId;
+    }
+    if (searchText) {
+      whereOption.name = { [Op.like]: `%${searchText}%` };
+    }
+
     const products = await Product.findAll({
-      where: {
-        productName: { [Op.like]: `%${searchText}%` },
-        status: PRODUCT_STATUS.APPROVED,
-        supplierId,
-      },
+      where: whereOption,
       order: [['productName', 'ASC']],
       offset,
       limit,
@@ -30,7 +34,6 @@ exports.getApprovedProduct = async (req, res, next) => {
         { model: Promotion },
       ],
     });
-
     const totalPage = Math.ceil(products.length / limit);
     res.status(200).json({
       message: 'Get all approved product successfully',
@@ -66,18 +69,21 @@ exports.getProductById = async (req, res, next) => {
 
 exports.getApprovedProductByCategoryId = async (req, res, next) => {
   try {
-    const { searchText = '', page = 1, supplierId = true } = req.query;
+    const { searchText, page = 1, supplierId } = req.query;
     const limit = 20;
     const offset = (page - 1) * limit;
-
     const { categoryId } = req.params;
+
+    const whereOption = { status: PRODUCT_STATUS.APPROVED, categoryId };
+    if (supplierId) {
+      whereOption.supplierId = supplierId;
+    }
+    if (searchText) {
+      whereOption.name = { [Op.like]: `%${searchText}%` };
+    }
+
     const products = await Product.findAll({
-      where: {
-        productName: { [Op.like]: `%${searchText}%` },
-        status: PRODUCT_STATUS.APPROVED,
-        categoryId,
-        supplierId,
-      },
+      where: whereOption,
       order: [['productName', 'ASC']],
       offset,
       limit,
@@ -101,18 +107,20 @@ exports.getApprovedProductByCategoryId = async (req, res, next) => {
 
 exports.getApprovedProductBySubCategoryId = async (req, res, next) => {
   try {
-    const { searchText = '', page = 1, supplierId = true } = req.query;
+    const { searchText, page = 1, supplierId } = req.query;
     const limit = 20;
     const offset = (page - 1) * limit;
-
     const { subCategoryId } = req.params;
+
+    const whereOption = { status: PRODUCT_STATUS.APPROVED, subCategoryId };
+    if (supplierId) {
+      whereOption.supplierId = supplierId;
+    }
+    if (searchText) {
+      whereOption.name = { [Op.like]: `%${searchText}%` };
+    }
     const products = await Product.findAll({
-      where: {
-        productName: { [Op.like]: `%${searchText}%` },
-        status: PRODUCT_STATUS.APPROVED,
-        subCategoryId,
-        supplierId,
-      },
+      where: whereOption,
       order: [['productName', 'ASC']],
       offset,
       limit,
