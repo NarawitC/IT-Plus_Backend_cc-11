@@ -16,7 +16,7 @@ exports.adminAuthenticate = async (req, res, next) => {
     const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const admin = await Admin.findOne({
       attributes: { exclude: ['password'] },
-      where: { id: payload.id },
+      where: { id: payload.adminId },
     });
     if (!admin) {
       createError('You are unauthorized', 401);

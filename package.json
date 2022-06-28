@@ -19,8 +19,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seqUmi": "sequelize db:migrate:undo && sequelize db:migrate",
-    "seqU": "sequelize db:drop && sequelize db:create",
-    "start": "nodemon app.js"
+    "seqU": "sequelize db:drop && sequelize db:create"
   },
   "keywords": [],
   "author": "",

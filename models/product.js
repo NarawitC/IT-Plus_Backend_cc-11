@@ -63,9 +63,7 @@ module.exports = (sequelize, DataTypes) => {
           PRODUCT_STATUS.HIDDEN
         ),
         allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
+        defaultValue: PRODUCT_STATUS.PENDING,
       },
 
       rejectReason: {
@@ -139,7 +137,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Product.belongsTo(models.Admin, {
       foreignKey: {
-        name: 'ChangeStatusAdminId',
+        name: 'changeStatusAdminId',
         allowNull: true,
       },
       onUpdate: 'CASCADE',

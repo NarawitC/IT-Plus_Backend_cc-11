@@ -1,0 +1,91 @@
+const { PRODUCT_STATUS } = require('../../config/constants');
+const { Product, Promotion } = require('../../models');
+
+exports.getAllProduct = async (req, res, next) => {
+  try {
+    const products = await Product.findAll({
+      order: [['productName', 'ASC']],
+    });
+    res.status(200).json({
+      message: 'Get all product successfully',
+      products,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getProductById = async (req, res, next) => {
+  try {
+    const { productId } = req.params;
+    const product = await Product.findOne({
+      where: { id: productId },
+      include: [
+        {
+          model: Promotion,
+        },
+      ],
+    });
+    res.status(200).json({
+      message: 'Get product by id successfully',
+      product,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.approveProduct = async (req, res, next) => {
+  try {
+    const { id: changeStatusAdminId } = req.admin;
+    const { productId } = req.params;
+    const product = await Product.findOne({
+      where: { id: productId },
+    });
+    if (product.status === PRODUCT_STATUS.PENDING) {
+      product.status = PRODUCT_STATUS.APPROVED;
+      product.changeStatusAdminId = changeStatusAdminId;
+      await product.save();
+      res.status(200).json({
+        message: 'Approve product successfully',
+      });
+    } else {
+      res.status(400).json({
+        message: 'Product is already approved',
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.rejectProduct = async (req, res, next) => {
+  try {
+    const { id: changeStatusAdminId } = req.admin;
+    const { productId } = req.params;
+    const { rejectReason } = req.body;
+    if (!rejectReason) {
+      res.status(400).json({
+        message: 'Reject reason is required',
+      });
+    }
+    const product = await Product.findOne({
+      where: { id: productId },
+    });
+    if (product.status === PRODUCT_STATUS.PENDING) {
+      product.status = PRODUCT_STATUS.REJECTED;
+      product.changeStatusAdminId = changeStatusAdminId;
+      product.rejectReason = rejectReason;
+      await product.save();
+      res.status(200).json({
+        message: 'Reject product successfully',
+      });
+    } else {
+      res.status(400).json({
+        message: 'Product is already rejected',
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+};

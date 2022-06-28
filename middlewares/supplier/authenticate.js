@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const { User } = require('../../models');
+const { User, Supplier } = require('../../models');
 
 const createError = require('../error');
 exports.supplierAuthenticate = async (req, res, next) => {
@@ -16,12 +16,17 @@ exports.supplierAuthenticate = async (req, res, next) => {
     const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const user = await User.findOne({
       attributes: { exclude: ['password'] },
-      where: { id: payload.id, role: payload.role },
+      where: { id: payload.userId, role: payload.role },
+      include: [
+        {
+          model: Supplier,
+        },
+      ],
     });
     if (!user) {
       createError('You are unauthorized', 401);
     }
-    req.supplier = supplier;
+    req.user = user;
     next();
   } catch (err) {
     next(err);
