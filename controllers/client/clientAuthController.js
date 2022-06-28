@@ -12,7 +12,7 @@ const genToken = (payload) => {
   });
 };
 
-exports.clientSignUp = async (req, res, next) => {
+exports.signUp = async (req, res, next) => {
   try {
     const {
       firstName,
@@ -65,7 +65,7 @@ exports.clientSignUp = async (req, res, next) => {
   }
 };
 
-exports.clientSignIn = async (req, res, next) => {
+exports.signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({
