@@ -11,6 +11,7 @@ exports.createCartItem = async (req, res, next) => {
     const bulkCartItem = await CartItem.bulkCreate(cartItems);
     res.status(200).json({
       message: 'Create cart item successfully',
+      bulkCartItem,
     });
   } catch (error) {
     next(error);

@@ -3,7 +3,7 @@ const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const createError = require('../../utils/createError');
-const { User, Supplier } = require('../../models');
+const { User, Supplier, sequelize } = require('../../models');
 const { USER_ROLE } = require('../../config/constants');
 
 const genToken = (payload) => {
@@ -13,6 +13,7 @@ const genToken = (payload) => {
 };
 
 exports.signUp = async (req, res, next) => {
+  const transaction = await sequelize.transaction();
   try {
     const {
       firstName,
@@ -72,30 +73,38 @@ exports.signUp = async (req, res, next) => {
     }
 
     const hashedPassword = await bcryptjs.hash(password, 12);
-    const user = await User.create({
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      password: hashedPassword,
-      address,
-      role: USER_ROLE.SUPPLIER,
-    });
+    const user = await User.create(
+      {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        password: hashedPassword,
+        address,
+        role: USER_ROLE.SUPPLIER,
+      },
+      { transaction }
+    );
 
-    await Supplier.create({
-      userId: user.id,
-      displayName,
-      description,
-      profilePicture,
-      lineId,
-      bankName,
-      bankAccount,
-    });
+    await Supplier.create(
+      {
+        userId: user.id,
+        displayName,
+        description,
+        profilePicture,
+        lineId,
+        bankName,
+        bankAccount,
+      },
+      { transaction }
+    );
 
     res.status(201).json({
       message: 'Supplier created successfully',
     });
+    await transaction.commit();
   } catch (err) {
+    await transaction.rollback();
     next(err);
   }
 };
