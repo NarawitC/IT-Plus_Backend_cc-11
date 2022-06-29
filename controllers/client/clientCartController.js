@@ -42,3 +42,26 @@ exports.getAllCart = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getCartById = async (req, res, next) => {
+  try {
+    const { cartId } = req.params;
+    const cart = await Cart.findOne({
+      where: {
+        id: cartId,
+      },
+      include: [
+        {
+          model: CartItem,
+          include: [{ model: Product, include: [{ model: Promotion }] }],
+        },
+      ],
+    });
+    res.status(200).json({
+      message: 'Get cart successfully',
+      cart,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
