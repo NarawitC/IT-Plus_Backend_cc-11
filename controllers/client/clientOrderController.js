@@ -8,10 +8,13 @@ exports.bulkCreateOrderWithOrderItem = async (req, res, next) => {
       Client: { id: clientId },
     } = req.user;
     const { orders } = req.body;
+    const { cartId } = req.params;
 
     orders.map((order) => {
       order.clientId = clientId;
     });
+
+    Cart.destroy({ where: { id: cartId } }, { transaction });
 
     const bulkOrder = await Order.bulkCreate(orders, { transaction });
     const plainBulkOrder = JSON.parse(JSON.stringify(bulkOrder));

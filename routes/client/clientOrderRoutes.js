@@ -3,6 +3,6 @@ const router = express.Router();
 
 const clientOrderController = require('../../controllers/client/clientOrderController');
 
-router.post('/', clientOrderController.bulkCreateOrderWithOrderItem);
+router.post('/:cartId', clientOrderController.bulkCreateOrderWithOrderItem);
 
 module.exports = router;
