@@ -25,7 +25,7 @@ exports.signUp = async (req, res, next) => {
       address,
       displayName,
       description = null,
-      profilePicture,
+      profilePicture = 'https://res.cloudinary.com/narawit/image/upload/v1656510181/IT_Shop/Default%20photo/defaultSupplierProfilePicture_zum06n.png',
       lineId,
       bankName,
       bankAccount,
