@@ -29,12 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     { underscored: true }
   );
   Promotion.associate = (models) => {
-    Promotion.hasMany(models.OrderItem, {
-      foreignKey: 'promotionId',
-      allowNull: true,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
     Promotion.belongsTo(models.Product, {
       foreignKey: 'productId',
       allowNull: false,
