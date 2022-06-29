@@ -10,12 +10,15 @@ module.exports = (sequelize, DataTypes) => {
           isInt: true,
         },
       },
+      promotionId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       discount: {
         type: DataTypes.INTEGER,
         allowNull: true,
         defaultValue: 0,
         validate: {
-          notEmpty: true,
           isInt: true,
         },
       },
@@ -32,12 +35,6 @@ module.exports = (sequelize, DataTypes) => {
     OrderItem.belongsTo(models.Product, {
       foreignKey: 'productId',
       allowNull: false,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
-    OrderItem.belongsTo(models.Promotion, {
-      foreignKey: 'promotionId',
-      allowNull: true,
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });

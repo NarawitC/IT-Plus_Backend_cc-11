@@ -7,10 +7,10 @@ exports.createCartItem = async (req, res, next) => {
     cartItems.map((cartItem) => {
       cartItem.cartId = cartId;
     });
-    console.log(cartItems);
     const bulkCartItem = await CartItem.bulkCreate(cartItems);
     res.status(200).json({
       message: 'Create cart item successfully',
+      bulkCartItem,
     });
   } catch (error) {
     next(error);
