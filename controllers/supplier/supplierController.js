@@ -6,8 +6,8 @@ exports.getMyInfo = async (req, res, next) => {
     const user = await User.findOne({
       attributes: {
         exclude: ['password'],
-        where: { id: req.user.id, role: USER_ROLE.SUPPLIER },
       },
+      where: { id: req.user.id, role: USER_ROLE.SUPPLIER },
       include: [{ model: Supplier }],
     });
     if (!user) {

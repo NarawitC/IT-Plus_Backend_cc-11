@@ -4,17 +4,6 @@ module.exports = (sequelize, DataTypes) => {
   const PurchasedOrder = sequelize.define(
     'PurchasedOrder',
     {
-      status: {
-        type: DataTypes.ENUM(
-          PURCHASED_ORDER_STATUS.PENDING,
-          PURCHASED_ORDER_STATUS.CONFIRMED
-        ),
-        allowNull: false,
-        defaultValue: PURCHASED_ORDER_STATUS.PENDING,
-        validate: {
-          notEmpty: true,
-        },
-      },
       paymentAt: {
         type: DataTypes.DATE,
         allowNull: false,
