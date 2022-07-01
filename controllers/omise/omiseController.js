@@ -6,7 +6,6 @@ const omise = require('omise')({
 
 exports.checkoutCreditCard = async (req, res, next) => {
   try {
-    console.log('first');
     const { clientId, totalPrice, token } = req.body;
     const customer = await omise.customers.create({
       name: clientId,
@@ -18,7 +17,7 @@ exports.checkoutCreditCard = async (req, res, next) => {
       currency: 'thb',
       customer: customer.id,
     });
-    //  console.log('Charge -->', charge);
+    // console.log('Charge -->', charge);
 
     res.status(200).json({
       message: 'Checkout successfully',
