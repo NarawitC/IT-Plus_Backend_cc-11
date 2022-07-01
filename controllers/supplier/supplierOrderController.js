@@ -23,7 +23,7 @@ exports.getAllOrder = async (req, res, next) => {
       include: [
         {
           model: OrderItem,
-          include: [{ model: Product }, { model: Promotion }],
+          include: [{ model: Product, include: [{ model: Promotion }] }],
         },
         { model: PurchasedOrder, include: [{ model: ShippingOrder }] },
         {
@@ -51,7 +51,7 @@ exports.getOrderById = async (req, res, next) => {
       include: [
         {
           model: OrderItem,
-          include: [{ model: Product }, { model: Promotion }],
+          include: [{ model: Product, include: [{ model: Promotion }] }],
         },
         { model: PurchasedOrder, include: [{ model: ShippingOrder }] },
       ],
