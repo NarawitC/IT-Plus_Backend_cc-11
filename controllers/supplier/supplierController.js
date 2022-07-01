@@ -1,6 +1,8 @@
 const { User, Supplier } = require('../../models');
 const { USER_ROLE } = require('../../config/constants');
 
+const createError = require('../../utils/createError');
+
 exports.getMyInfo = async (req, res, next) => {
   try {
     const user = await User.findOne({
