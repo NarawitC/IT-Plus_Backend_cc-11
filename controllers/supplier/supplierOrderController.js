@@ -8,6 +8,8 @@ const {
   Promotion,
   PurchasedOrder,
   ShippingOrder,
+  Client,
+  User,
 } = require('../../models');
 
 exports.getAllOrder = async (req, res, next) => {
@@ -24,6 +26,10 @@ exports.getAllOrder = async (req, res, next) => {
           include: [{ model: Product }, { model: Promotion }],
         },
         { model: PurchasedOrder, include: [{ model: ShippingOrder }] },
+        {
+          model: Client,
+          include: [{ model: User, attributes: { exclude: ['password'] } }],
+        },
       ],
     });
 
