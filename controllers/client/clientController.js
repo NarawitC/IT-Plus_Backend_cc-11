@@ -3,11 +3,12 @@ const { USER_ROLE } = require('../../config/constants');
 
 exports.getMyInfo = async (req, res, next) => {
   try {
+    console.log(USER_ROLE.CLIENT);
     const user = await User.findOne({
       attributes: {
         exclude: ['password'],
-        where: { id: req.user.id, role: USER_ROLE.CLIENT },
       },
+      where: { id: req.user.id, role: USER_ROLE.CLIENT },
       include: [{ model: Client }],
     });
     if (!user) {
