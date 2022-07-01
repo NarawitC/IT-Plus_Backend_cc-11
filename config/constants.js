@@ -27,3 +27,8 @@ exports.USER_ROLE = {
   CLIENT: 'CLIENT',
   SUPPLIER: 'SUPPLIER',
 };
+
+exports.OMISE = {
+  PUBLIC_KEY: 'pkey_test_5saxyz4aecm6zfdkrp5',
+  SECRET_KEY: 'skey_test_5saxyz5yx17gt1fh4nu',
+};
