@@ -10,6 +10,7 @@ const adminClientRouter = require('./admin/adminClientRoutes');
 const adminOrderRouter = require('./admin/adminOrderRoutes');
 const adminSupplierRouter = require('./admin/adminSupplierRoutes');
 const adminRouter = require('./admin/adminRoutes');
+const adminPromotionRouter = require('./admin/adminPromotionRoutes');
 
 router.use('/auth', adminAuthRouter);
 router.use('/product', adminAuthenticate, adminProductRouter);
@@ -19,5 +20,6 @@ router.use('/client', adminAuthenticate, adminClientRouter);
 router.use('/supplier', adminAuthenticate, adminSupplierRouter);
 router.use('/order', adminAuthenticate, adminOrderRouter);
 router.use('/admin', adminAuthenticate, adminRouter);
+router.use('/promotion', adminAuthenticate, adminPromotionRouter);
 
 module.exports = router;
