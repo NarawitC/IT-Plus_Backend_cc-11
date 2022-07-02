@@ -7,5 +7,9 @@ router.post(
   '/:purchasedOrderId',
   supplierShippingOrderController.createShippingOrder
 );
+router.patch(
+  '/to-client/:shippingOrderId',
+  supplierShippingOrderController.updateStatusToClient
+);
 
 module.exports = router;
