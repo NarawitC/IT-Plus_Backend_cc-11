@@ -12,4 +12,9 @@ router.patch(
   supplierShippingOrderController.updateStatusToClient
 );
 
+router.patch(
+  '/to-delivered/:shippingOrderId',
+  supplierShippingOrderController.updateStatusToDelivered
+);
+
 module.exports = router;
