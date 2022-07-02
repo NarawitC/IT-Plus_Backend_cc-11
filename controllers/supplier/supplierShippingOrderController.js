@@ -37,3 +37,22 @@ exports.updateStatusToClient = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.updateStatusToDelivered = async (req, res, next) => {
+  try {
+    const { shippingOrderId } = req.params;
+    const shippingOrder = await ShippingOrder.findByPk(shippingOrderId);
+    if (!shippingOrder) {
+      createError(404, 'Shipping order not found');
+    }
+    await shippingOrder.update({
+      status: SHIPPING_ORDER_STATUS.DELIVERED,
+    });
+    res.status(200).json({
+      message: 'Shipping order status updated successfully',
+      shippingOrder,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
