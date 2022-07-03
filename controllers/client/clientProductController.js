@@ -11,7 +11,13 @@ const { Op } = require('sequelize');
 
 exports.getApprovedProduct = async (req, res, next) => {
   try {
-    const { searchText, page = 1, supplierId } = req.query;
+    const {
+      searchText,
+      page = 1,
+      supplierId,
+      categoryId,
+      subcategoryId,
+    } = req.query;
     const limit = 20;
     const offset = (page - 1) * limit;
 
@@ -21,6 +27,12 @@ exports.getApprovedProduct = async (req, res, next) => {
     }
     if (searchText) {
       whereOption.name = { [Op.like]: `%${searchText}%` };
+    }
+    if (categoryId) {
+      whereOption.categoryId = categoryId;
+    }
+    if (subcategoryId) {
+      whereOption.subCategoryId = subcategoryId;
     }
 
     const products = await Product.findAll({
