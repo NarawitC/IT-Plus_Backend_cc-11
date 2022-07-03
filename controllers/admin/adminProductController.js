@@ -1,6 +1,8 @@
 const { PRODUCT_STATUS } = require('../../config/constants');
 const { Product, Promotion } = require('../../models');
 
+const createError = require('../../utils/createError');
+
 exports.getAllProduct = async (req, res, next) => {
   try {
     const products = await Product.findAll({
@@ -49,6 +51,7 @@ exports.approveProduct = async (req, res, next) => {
       res.status(200).json({
         message: 'Approve product successfully',
       });
+      return;
     } else {
       res.status(400).json({
         message: 'Product is already approved',
@@ -65,9 +68,7 @@ exports.rejectProduct = async (req, res, next) => {
     const { productId } = req.params;
     const { rejectReason } = req.body;
     if (!rejectReason) {
-      res.status(400).json({
-        message: 'Reject reason is required',
-      });
+      createError('Missing rejectReason', 400);
     }
     const product = await Product.findOne({
       where: { id: productId },
@@ -80,6 +81,7 @@ exports.rejectProduct = async (req, res, next) => {
       res.status(200).json({
         message: 'Reject product successfully',
       });
+      return;
     } else {
       res.status(400).json({
         message: 'Product is already rejected',
