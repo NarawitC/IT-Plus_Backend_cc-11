@@ -2,20 +2,24 @@ const express = require('express');
 const router = express.Router();
 
 const { adminAuthenticate } = require('../middlewares/admin/authenticate');
-const adminAuthController = require('./admin/adminAuthRoutes');
-const adminProductController = require('./admin/adminProductRoutes');
-const adminCategoryController = require('./admin/adminCategoryRoutes');
-const adminSubCategoryController = require('./admin/adminSubCategoryRoutes');
-const adminClientController = require('./admin/adminClientRoutes');
-const adminOrderController = require('./admin/adminOrderRoutes');
-const adminSupplierController = require('./admin/adminSupplierRoutes');
+const adminAuthRouter = require('./admin/adminAuthRoutes');
+const adminProductRouter = require('./admin/adminProductRoutes');
+const adminCategoryRouter = require('./admin/adminCategoryRoutes');
+const adminSubCategoryRouter = require('./admin/adminSubCategoryRoutes');
+const adminClientRouter = require('./admin/adminClientRoutes');
+const adminOrderRouter = require('./admin/adminOrderRoutes');
+const adminSupplierRouter = require('./admin/adminSupplierRoutes');
+const adminRouter = require('./admin/adminRoutes');
+const adminPromotionRouter = require('./admin/adminPromotionRoutes');
 
-router.use('/auth', adminAuthController);
-router.use('/product', adminAuthenticate, adminProductController);
-router.use('/category', adminAuthenticate, adminCategoryController);
-router.use('/sub-category', adminAuthenticate, adminSubCategoryController);
-router.use('/client', adminAuthenticate, adminClientController);
-router.use('/supplier', adminAuthenticate, adminSupplierController);
-router.use('/order', adminAuthenticate, adminOrderController);
+router.use('/auth', adminAuthRouter);
+router.use('/product', adminAuthenticate, adminProductRouter);
+router.use('/category', adminAuthenticate, adminCategoryRouter);
+router.use('/sub-category', adminAuthenticate, adminSubCategoryRouter);
+router.use('/client', adminAuthenticate, adminClientRouter);
+router.use('/supplier', adminAuthenticate, adminSupplierRouter);
+router.use('/order', adminAuthenticate, adminOrderRouter);
+router.use('/admin', adminAuthenticate, adminRouter);
+router.use('/promotion', adminAuthenticate, adminPromotionRouter);
 
 module.exports = router;
