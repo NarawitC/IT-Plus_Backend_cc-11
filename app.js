@@ -24,10 +24,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('', (req, res, next) => {
-  console.log(req.url);
-  next();
-});
+// app.use('', (req, res, next) => {
+//   console.log(req.url);
+//   console.log('-----------------------------------------');
+//   next();
+// });
 
 app.use('/user', userRouter);
 app.use('/client', clientRouter);
