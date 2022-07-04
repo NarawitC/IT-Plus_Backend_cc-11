@@ -3,10 +3,7 @@ const router = express.Router();
 
 const supplierShippingOrderController = require('../../controllers/supplier/supplierShippingOrderController');
 
-router.post(
-  '/:purchasedOrderId',
-  supplierShippingOrderController.createShippingOrder
-);
+router.post('/', supplierShippingOrderController.createShippingOrder);
 router.patch(
   '/to-client/:shippingOrderId',
   supplierShippingOrderController.updateStatusToClient

@@ -5,6 +5,8 @@ const {
   Product,
   sequelize,
   Promotion,
+  PurchasedOrder,
+  ShippingOrder,
 } = require('../../models');
 const { Op } = require('sequelize');
 
@@ -67,6 +69,7 @@ exports.getAllOrder = async (req, res, next) => {
           model: OrderItem,
           include: [{ model: Product, include: [{ model: Promotion }] }],
         },
+        { model: PurchasedOrder, include: [{ model: ShippingOrder }] },
       ],
     });
     res.status(200).json({
@@ -90,6 +93,7 @@ exports.getOrderById = async (req, res, next) => {
           model: OrderItem,
           include: [{ model: Product, include: [{ model: Promotion }] }],
         },
+        { model: PurchasedOrder, include: [{ model: ShippingOrder }] },
       ],
     });
     res.status(200).json({
