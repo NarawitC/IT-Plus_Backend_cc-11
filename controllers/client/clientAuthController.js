@@ -90,3 +90,41 @@ exports.signIn = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.googleLogin = async (req, res, next) => {
+  try {
+    const { googleData } = req.body;
+    const payload = jwt.decode(googleData);
+    console.log(payload);
+    const existingUser = await User.findOne({
+      where: { googleId: payload.sub },
+    });
+    if (!existingUser) {
+      const newUser = await User.create({
+        firstName: payload.given_name,
+        lastName: payload.family_name,
+        email: payload.email,
+        googleId: payload.sub,
+        phoneNumber: 'NEED TO CHANGE',
+        password: 'NEED TO CHANGE',
+        address: 'NEED TO CHANGE',
+        role: USER_ROLE.CLIENT,
+      });
+
+      await Client.create({
+        userId: newUser.id,
+      });
+    }
+    const user = await User.findOne({
+      where: { googleId: payload.sub },
+    });
+    const token = genToken({ userId: user.id, role: user.role });
+    res.status(200).json({
+      message: 'Client signed in successfully',
+      token,
+      user,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

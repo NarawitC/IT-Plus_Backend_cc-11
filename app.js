@@ -16,8 +16,8 @@ const supplierRouter = require('./routes/supplierRoutes');
 const userRouter = require('./routes/userRoutes');
 const omiseRouter = require('./routes/omiseRoutes');
 // ----------------------------- Sync to create database -----------------------------
-// const { sequelize } = require('./models/index');
-// sequelize.sync({ force: true });
+// const { User } = require('./models/index');
+// User.sync({ alter: true });
 // ----------------------------- Sync to create database -----------------------------
 
 app.use(cors());
