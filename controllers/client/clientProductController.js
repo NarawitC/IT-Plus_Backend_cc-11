@@ -26,7 +26,7 @@ exports.getApprovedProduct = async (req, res, next) => {
       whereOption.supplierId = supplierId;
     }
     if (searchText) {
-      whereOption.name = { [Op.like]: `%${searchText}%` };
+      whereOption.productName = { [Op.like]: `%${searchText}%` };
     }
     if (categoryId) {
       whereOption.categoryId = categoryId;

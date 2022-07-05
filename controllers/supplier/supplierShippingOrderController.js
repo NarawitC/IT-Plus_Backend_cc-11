@@ -6,8 +6,11 @@ const createError = require('../../utils/createError');
 
 exports.createShippingOrder = async (req, res, next) => {
   try {
-    const { purchasedOrderId } = req.params;
-    const shippingOrder = await ShippingOrder.create({ purchasedOrderId });
+    const { purchasedOrderIds } = req.body;
+    console.log(purchasedOrderIds);
+    console.log('------------------------');
+    const shippingOrder = await ShippingOrder.bulkCreate(purchasedOrderIds);
+    console.log(shippingOrder);
     res.status(201).json({
       message: 'Shipping order created successfully',
       shippingOrder,
