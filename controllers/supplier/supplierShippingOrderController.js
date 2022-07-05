@@ -7,10 +7,10 @@ const createError = require('../../utils/createError');
 exports.createShippingOrder = async (req, res, next) => {
   try {
     const { purchasedOrderIds } = req.body;
-    console.log(purchasedOrderIds);
-    console.log('------------------------');
+    // console.log(purchasedOrderIds);
+    // console.log('------------------------');
     const shippingOrder = await ShippingOrder.bulkCreate(purchasedOrderIds);
-    console.log(shippingOrder);
+    // console.log(shippingOrder);
     res.status(201).json({
       message: 'Shipping order created successfully',
       shippingOrder,
@@ -26,8 +26,12 @@ exports.updateStatusToClient = async (req, res, next) => {
     const { trackingId } = req.body;
     const shippingOrder = await ShippingOrder.findByPk(shippingOrderId);
     if (!shippingOrder) {
-      throw createError(404, 'Shipping order not found');
+      createError(404, 'Shipping order not found');
     }
+    if (!trackingId) {
+      createError(400, 'Tracking id is required');
+    }
+    
     await shippingOrder.update({
       trackingId,
       status: SHIPPING_ORDER_STATUS.TO_CLIENT,
