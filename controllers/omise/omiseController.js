@@ -13,7 +13,7 @@ exports.checkoutCreditCard = async (req, res, next) => {
     });
 
     const charge = await omise.charges.create({
-      amount: (totalPrice * 100).toFixed(0),
+      amount: (Number(totalPrice) * 100).toFixed(0),
       currency: 'thb',
       customer: customer.id,
     });
@@ -21,7 +21,7 @@ exports.checkoutCreditCard = async (req, res, next) => {
 
     res.status(200).json({
       message: 'Checkout successfully',
-      amount: totalPrice.toFixed(2),
+      amount: Number(totalPrice).toFixed(2),
       status: charge.status,
       paymentAt: charge.paid_at,
       transactionId: charge.id,
