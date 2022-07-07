@@ -8,12 +8,7 @@ exports.createShippingOrder = async (req, res, next) => {
   try {
     const { purchasedOrderIds } = req.body;
     // console.log(purchasedOrderIds);
-    const ObjectPurchasedOrderId = purchasedOrderIds.map((item) => {
-      return { purchasedOrderId: item };
-    });
-    const shippingOrder = await ShippingOrder.bulkCreate(
-      ObjectPurchasedOrderId
-    );
+    const shippingOrder = await ShippingOrder.bulkCreate(purchasedOrderIds);
     res.status(201).json({
       message: 'Shipping order created successfully',
       shippingOrder,
