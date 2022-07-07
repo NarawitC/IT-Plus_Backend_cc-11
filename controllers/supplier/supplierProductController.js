@@ -51,11 +51,6 @@ exports.createProduct = async (req, res, next) => {
     if (!productName) {
       createError('Product name is invalid', 400);
     }
-    if (description) {
-      if (description.length > 400) {
-        createError('Description is less than 400 letter', 400);
-      }
-    }
     if (!price) {
       createError('Product price is invalid', 400);
     }
