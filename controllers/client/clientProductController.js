@@ -45,6 +45,12 @@ exports.getApprovedProduct = async (req, res, next) => {
         { model: Category },
         { model: SubCategory },
         { model: Promotion },
+        {
+          model: Supplier,
+          attributes: {
+            exclude: ['password'],
+          },
+        },
       ],
     });
     const totalPage = Math.ceil(totalProduct / limit);
