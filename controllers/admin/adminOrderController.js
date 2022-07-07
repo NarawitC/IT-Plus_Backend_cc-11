@@ -7,6 +7,7 @@ const {
   Order,
   PurchasedOrder,
   ShippingOrder,
+  Supplier,
 } = require('../../models/index');
 
 const createError = require('../../utils/createError');
@@ -23,6 +24,7 @@ exports.getAllOrder = async (req, res, next) => {
             },
           ],
         },
+        { model: Supplier },
       ],
     });
     res.status(200).json({
@@ -61,6 +63,7 @@ exports.getOrderById = async (req, res, next) => {
             },
           ],
         },
+        { model: Supplier },
       ],
     });
     res.status(200).json({
