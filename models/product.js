@@ -73,6 +73,12 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
+
+      secondHand: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
     },
     { underscored: true }
   );
