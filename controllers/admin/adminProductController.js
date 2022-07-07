@@ -62,6 +62,24 @@ exports.approveProduct = async (req, res, next) => {
   }
 };
 
+exports.approveAllProduct = async (req, res, next) => {
+  try {
+    const { id: changeStatusAdminId } = req.admin;
+
+    const products = await Product.findAll({
+      where: { status: PRODUCT_STATUS.PENDING },
+    });
+    products.forEach(async (product) => {
+      product.status = PRODUCT_STATUS.APPROVED;
+      product.changeStatusAdminId = changeStatusAdminId;
+      await product.save();
+    });
+    res.status(200).json({ message: 'Approve all product successfully' });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.rejectProduct = async (req, res, next) => {
   try {
     const { id: changeStatusAdminId } = req.admin;
