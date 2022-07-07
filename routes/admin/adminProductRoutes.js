@@ -6,6 +6,7 @@ const adminProductController = require('../../controllers/admin/adminProductCont
 router.get('/', adminProductController.getAllProduct);
 router.get('/:productId', adminProductController.getProductById);
 router.patch('/approve/:productId', adminProductController.approveProduct);
+router.patch('/approve-all', adminProductController.approveAllProduct);
 router.patch('/reject/:productId', adminProductController.rejectProduct);
 
 module.exports = router;
