@@ -1,6 +1,7 @@
 const validator = require('validator');
 
 const {
+  Client,
   Promotion,
   Product,
   OrderItem,
