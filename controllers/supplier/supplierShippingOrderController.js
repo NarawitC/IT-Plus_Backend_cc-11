@@ -8,9 +8,12 @@ exports.createShippingOrder = async (req, res, next) => {
   try {
     const { purchasedOrderIds } = req.body;
     // console.log(purchasedOrderIds);
-    // console.log('------------------------');
-    const shippingOrder = await ShippingOrder.bulkCreate(purchasedOrderIds);
-    // console.log(shippingOrder);
+    const ObjectPurchasedOrderId = purchasedOrderIds.map((item) => {
+      return { purchasedOrderId: item };
+    });
+    const shippingOrder = await ShippingOrder.bulkCreate(
+      ObjectPurchasedOrderId
+    );
     res.status(201).json({
       message: 'Shipping order created successfully',
       shippingOrder,
@@ -31,7 +34,7 @@ exports.updateStatusToClient = async (req, res, next) => {
     if (!trackingId) {
       createError(400, 'Tracking id is required');
     }
-    
+
     await shippingOrder.update({
       trackingId,
       status: SHIPPING_ORDER_STATUS.TO_CLIENT,
