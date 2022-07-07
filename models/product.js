@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       description: {
-        type: DataTypes.STRING(400),
+        type: DataTypes.STRING(5000),
       },
 
       stock: {
