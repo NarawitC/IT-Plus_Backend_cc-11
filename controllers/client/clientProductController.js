@@ -35,6 +35,7 @@ exports.getApprovedProduct = async (req, res, next) => {
       whereOption.subCategoryId = subcategoryId;
     }
 
+    const totalProduct = await Product.count({ where: whereOption });
     const products = await Product.findAll({
       where: whereOption,
       order: [['productName', 'ASC']],
@@ -46,7 +47,7 @@ exports.getApprovedProduct = async (req, res, next) => {
         { model: Promotion },
       ],
     });
-    const totalPage = Math.ceil(products.length / limit);
+    const totalPage = Math.ceil(totalProduct / limit);
     res.status(200).json({
       message: 'Get all approved product successfully',
       products,
@@ -93,7 +94,7 @@ exports.getApprovedProductByCategoryId = async (req, res, next) => {
     if (searchText) {
       whereOption.name = { [Op.like]: `%${searchText}%` };
     }
-
+    const totalProduct = await Product.count({ where: whereOption });
     const products = await Product.findAll({
       where: whereOption,
       order: [['productName', 'ASC']],
@@ -106,7 +107,7 @@ exports.getApprovedProductByCategoryId = async (req, res, next) => {
       ],
     });
 
-    const totalPage = Math.ceil(products.length / limit);
+    const totalPage = Math.ceil(totalProduct / limit);
     res.status(200).json({
       message: 'Get product by category id successfully',
       products,
@@ -131,6 +132,7 @@ exports.getApprovedProductBySubCategoryId = async (req, res, next) => {
     if (searchText) {
       whereOption.name = { [Op.like]: `%${searchText}%` };
     }
+    const totalProduct = await Product.count({ where: whereOption });
     const products = await Product.findAll({
       where: whereOption,
       order: [['productName', 'ASC']],
@@ -143,7 +145,7 @@ exports.getApprovedProductBySubCategoryId = async (req, res, next) => {
       ],
     });
 
-    const totalPage = Math.ceil(products.length / limit);
+    const totalPage = Math.ceil(totalProduct / limit);
     res.status(200).json({
       message: 'Get product by sub category id successfully',
       products,
