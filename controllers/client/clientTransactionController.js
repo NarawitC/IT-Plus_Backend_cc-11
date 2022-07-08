@@ -28,9 +28,11 @@ exports.createTransferToSupplier = async (req, res, next) => {
     const balance = await Balance.findOne({
       where: { supplierId: supplierId },
     });
+    console.log(balance);
     if (!balance) {
       await Balance.create({
         balance: +productPrice * 0.9,
+        supplierId: supplierId,
       });
     }
     if (balance) {
