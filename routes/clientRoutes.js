@@ -11,6 +11,7 @@ const clientCategoryRouter = require('./client/clientCategoryRoutes');
 const clientSupplierRouter = require('./client/clientSupplierRoutes');
 const clientOrderRouter = require('./client/clientOrderRoutes');
 const clientPurchasedOrderRouter = require('./client/clientPurchasedOrderRoutes');
+const clientTransactionRouter = require('./client/clientTransactionRoutes');
 
 router.use('/auth', clientAuthRouter);
 router.use('/client', clientAuthenticate, clientRouter);
@@ -21,5 +22,6 @@ router.use('/category', clientAuthenticate, clientCategoryRouter);
 router.use('/supplier', clientAuthenticate, clientSupplierRouter);
 router.use('/order', clientAuthenticate, clientOrderRouter);
 router.use('/purchased-order', clientAuthenticate, clientPurchasedOrderRouter);
+router.use('/transaction', clientAuthenticate, clientTransactionRouter);
 
 module.exports = router;
