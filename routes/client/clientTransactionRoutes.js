@@ -1,11 +1,5 @@
-const {
-  Supplier,
-  PurchasedOrder,
-  Balance,
-  Transaction,
-  Order,
-  sequelize,
-} = require('../../models');
+const express = require('express');
+const router = express.Router();
 
 const clientTransactionController = require('../../controllers/client/clientTransactionController');
 
