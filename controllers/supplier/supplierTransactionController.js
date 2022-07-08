@@ -61,6 +61,7 @@ exports.createWithdrawalTransaction = async (req, res, next) => {
         netAmount: withdrawalAmount,
         status: 'COMPLETED',
         fee,
+        supplierId: supplierId,
       },
       { transaction: t }
     );
