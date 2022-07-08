@@ -37,6 +37,12 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
+    PurchasedOrder.hasOne(models.Transaction, {
+      foreignKey: 'purchasedOrderId',
+      allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
   return PurchasedOrder;
 };

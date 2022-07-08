@@ -61,6 +61,12 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
+    Supplier.hasOne(models.Balance, {
+      foreignKey: 'supplierId',
+      allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
   return Supplier;
 };
