@@ -46,6 +46,7 @@ exports.createTransferToSupplier = async (req, res, next) => {
       balance,
     });
   } catch (err) {
+    t.rollback();
     next(err);
   }
 };

@@ -44,7 +44,6 @@ exports.getTransactionById = async (req, res, next) => {
 
 exports.createWithdrawalTransaction = async (req, res, next) => {
   const t = await sequelize.transaction();
-
   try {
     const {
       Supplier: { id: supplierId },
@@ -65,9 +64,7 @@ exports.createWithdrawalTransaction = async (req, res, next) => {
       },
       { transaction: t }
     );
-    // const {
-    //   Supplier: { id: supplierId },
-    // } = req.user;
+
     const balance = await Balance.findOne({
       where: { supplierId: supplierId },
     });
@@ -79,12 +76,13 @@ exports.createWithdrawalTransaction = async (req, res, next) => {
       balance.balance = +balance.balance - +withdrawalAmount;
       await balance.save({ transaction: t });
     }
-
+    await t.commit();
     res.status(200).json({
       message: 'Withdrawal and update supplier balance completed',
       transaction,
     });
   } catch (err) {
+    t.rollback();
     next(err);
   }
 };
