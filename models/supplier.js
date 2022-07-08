@@ -67,6 +67,12 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
+    Supplier.hasMany(models.Transaction, {
+      foreignKey: 'supplierId',
+      allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
   return Supplier;
 };

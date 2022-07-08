@@ -34,6 +34,14 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     });
+    Transaction.belongsTo(models.Supplier, {
+      foreignKey: {
+        name: 'supplierId',
+        allowNull: false,
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    });
   };
   return Transaction;
 };
