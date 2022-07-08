@@ -43,6 +43,8 @@ exports.getTransactionById = async (req, res, next) => {
 };
 
 exports.createWithdrawalTransaction = async (req, res, next) => {
+  const t = await sequelize.transaction();
+
   try {
     const {
       Supplier: { id: supplierId },
@@ -53,13 +55,16 @@ exports.createWithdrawalTransaction = async (req, res, next) => {
     if (!withdrawalAmount) {
       createError('Please insert withdrawal amount', 400);
     }
-    const transaction = await Transaction.create({
-      description,
-      type: 'WITHDRAWAL',
-      netAmount: withdrawalAmount,
-      status: 'COMPLETED',
-      fee,
-    });
+    const transaction = await Transaction.create(
+      {
+        description,
+        type: 'WITHDRAWAL',
+        netAmount: withdrawalAmount,
+        status: 'COMPLETED',
+        fee,
+      },
+      { transaction: t }
+    );
     // const {
     //   Supplier: { id: supplierId },
     // } = req.user;
