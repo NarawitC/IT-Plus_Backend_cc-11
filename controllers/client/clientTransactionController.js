@@ -19,6 +19,7 @@ exports.createTransferToSupplier = async (req, res, next) => {
         type: 'TRANSFER',
         netAmount: +productPrice * 0.9,
         status: 'COMPLETED',
+        fee: 0,
       },
       { transaction: t }
     );
