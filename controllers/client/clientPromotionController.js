@@ -12,10 +12,10 @@ const { Op } = require('sequelize');
 exports.getApprovedPromotionProduct = async (req, res, next) => {
   try {
     const promotionProducts = await Promotion.findAll({
-      where: { status: PRODUCT_STATUS.APPROVED },
       include: [
         {
           model: Product,
+          where: { status: PRODUCT_STATUS.APPROVED },
           include: [
             { model: Category },
             { model: SubCategory },
@@ -23,7 +23,6 @@ exports.getApprovedPromotionProduct = async (req, res, next) => {
           ],
         },
       ],
-      order: [['productName', 'ASC']],
     });
     res.status(200).json({
       message: 'Get all approved promotion  product successfully',
