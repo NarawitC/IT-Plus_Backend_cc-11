@@ -49,8 +49,26 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
+    Supplier.hasMany(models.Order, {
+      foreignKey: 'supplierId',
+      allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
     Supplier.belongsTo(models.User, {
       foreignKey: 'userId',
+      allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+    Supplier.hasOne(models.Balance, {
+      foreignKey: 'supplierId',
+      allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+    Supplier.hasMany(models.Transaction, {
+      foreignKey: 'supplierId',
       allowNull: false,
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',

@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   Admin.associate = (models) => {
     Admin.hasMany(models.Product, {
-      foreignKey: 'ChangeStatusAdminId',
+      foreignKey: 'changeStatusAdminId',
       allowNull: true,
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',

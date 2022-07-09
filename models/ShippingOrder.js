@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
       //todo generate a unique id from frontend function
       trackingId: {
         type: DataTypes.STRING,
-        allowNull: false,
         validate: {
           notEmpty: true,
         },

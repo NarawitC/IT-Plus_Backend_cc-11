@@ -12,7 +12,7 @@ const genToken = (payload) => {
   });
 };
 
-exports.clientSignUp = async (req, res, next) => {
+exports.signUp = async (req, res, next) => {
   try {
     const {
       firstName,
@@ -60,11 +60,12 @@ exports.clientSignUp = async (req, res, next) => {
       message: 'Client created successfully',
     });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };
 
-exports.clientSignIn = async (req, res, next) => {
+exports.signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({
@@ -82,6 +83,41 @@ exports.clientSignIn = async (req, res, next) => {
 
     const token = genToken({ userId: user.id, role: user.role });
     res.json({
+      message: 'Client signed in successfully',
+      token,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.googleLogin = async (req, res, next) => {
+  try {
+    const { googleData } = req.body;
+    const payload = jwt.decode(googleData);
+    // console.log(payload);
+    const existingUser = await User.findOne({
+      where: { googleId: payload.sub },
+    });
+    if (!existingUser) {
+      const newUser = await User.create({
+        firstName: payload.given_name,
+        lastName: payload.family_name,
+        email: payload.email,
+        googleId: payload.sub,
+        password: 'use google account',
+        role: USER_ROLE.CLIENT,
+      });
+
+      await Client.create({
+        userId: newUser.id,
+      });
+    }
+    const user = await User.findOne({
+      where: { googleId: payload.sub },
+    });
+    const token = genToken({ userId: user.id, role: user.role });
+    res.status(200).json({
       message: 'Client signed in successfully',
       token,
     });

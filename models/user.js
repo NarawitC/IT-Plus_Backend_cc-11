@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
       phoneNumber: {
         type: DataTypes.STRING,
         unique: true,
-        allowNull: false,
       },
       password: {
         type: DataTypes.STRING,
@@ -38,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true,
         },
+      },
+      googleId: {
+        type: DataTypes.STRING,
+        defaultValue: null,
       },
     },
 

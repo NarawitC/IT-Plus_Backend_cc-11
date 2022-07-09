@@ -13,18 +13,28 @@ if (process.env.NODE_ENV === 'development') {
 const clientRouter = require('./routes/clientRoutes');
 const adminRouter = require('./routes/adminRoutes');
 const supplierRouter = require('./routes/supplierRoutes');
+const userRouter = require('./routes/userRoutes');
+const omiseRouter = require('./routes/omiseRoutes');
 // ----------------------------- Sync to create database -----------------------------
-// const { sequelize } = require('./models/index');
-// sequelize.sync({ force: true });
+// const { sequelize, User } = require('./models/index');
+// sequelize.sync({ alter: true });
 // ----------------------------- Sync to create database -----------------------------
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// app.use('', (req, res, next) => {
+//   console.log(req.url);
+//   console.log('-----------------------------------------');
+//   next();
+// });
+
+app.use('/user', userRouter);
 app.use('/client', clientRouter);
 app.use('/supplier', supplierRouter);
 app.use('/admin', adminRouter);
+app.use('/omise', omiseRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

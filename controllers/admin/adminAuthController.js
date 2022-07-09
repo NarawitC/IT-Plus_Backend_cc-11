@@ -11,7 +11,7 @@ const genToken = (payload) => {
   });
 };
 
-exports.adminSignUp = async (req, res, next) => {
+exports.signUp = async (req, res, next) => {
   try {
     const { employeeId, password, confirmPassword, role } = req.body;
     if (!password) {
@@ -36,7 +36,7 @@ exports.adminSignUp = async (req, res, next) => {
   }
 };
 
-exports.adminSignIn = async (req, res, next) => {
+exports.signIn = async (req, res, next) => {
   try {
     const { employeeId, password } = req.body;
     const admin = await Admin.findOne({

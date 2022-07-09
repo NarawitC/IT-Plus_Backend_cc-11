@@ -1,9 +1,11 @@
 const validator = require('validator');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const cloudinary = require('../../utils/cloundinary');
 
 const createError = require('../../utils/createError');
-const { User, Supplier } = require('../../models');
+const { User, Supplier, sequelize } = require('../../models');
 const { USER_ROLE } = require('../../config/constants');
 
 const genToken = (payload) => {
@@ -12,7 +14,8 @@ const genToken = (payload) => {
   });
 };
 
-exports.supplierSignUp = async (req, res, next) => {
+exports.signUp = async (req, res, next) => {
+  const transaction = await sequelize.transaction();
   try {
     const {
       firstName,
@@ -24,7 +27,6 @@ exports.supplierSignUp = async (req, res, next) => {
       address,
       displayName,
       description = null,
-      profilePicture,
       lineId,
       bankName,
       bankAccount,
@@ -70,37 +72,65 @@ exports.supplierSignUp = async (req, res, next) => {
     if (!bankAccount) {
       createError('BankAccount is required', 400);
     }
+    const imageUrl = {};
+    if (req.files) {
+      if (req.files.profilePicture) {
+        const result = await cloudinary.upload(
+          req.files.profilePicture[0].path
+        );
+        imageUrl.profilePicture = result.secure_url;
+      }
+    }
+    const {
+      profilePicture = 'https://res.cloudinary.com/narawit/image/upload/v1656510181/IT_Shop/Default%20photo/defaultSupplierProfilePicture_zum06n.png',
+    } = imageUrl;
 
     const hashedPassword = await bcryptjs.hash(password, 12);
-    const user = await User.create({
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      password: hashedPassword,
-      address,
-      role: USER_ROLE.SUPPLIER,
-    });
+    const user = await User.create(
+      {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        password: hashedPassword,
+        address,
+        role: USER_ROLE.SUPPLIER,
+      },
+      { transaction }
+    );
 
-    await Supplier.create({
-      userId: user.id,
-      displayName,
-      description,
-      profilePicture,
-      lineId,
-      bankName,
-      bankAccount,
-    });
+    await Supplier.create(
+      {
+        userId: user.id,
+        displayName,
+        description,
+        profilePicture,
+        lineId,
+        bankName,
+        bankAccount,
+      },
+      { transaction }
+    );
 
     res.status(201).json({
       message: 'Supplier created successfully',
+      email,
+      password,
     });
+    await transaction.commit();
   } catch (err) {
+    await transaction.rollback();
     next(err);
+  } finally {
+    if (req.files) {
+      if (req.files.profilePicture) {
+        fs.unlinkSync(req.files.profilePicture[0].path);
+      }
+    }
   }
 };
 
-exports.supplierSignIn = async (req, res, next) => {
+exports.signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({
