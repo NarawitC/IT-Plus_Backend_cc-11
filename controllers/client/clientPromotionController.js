@@ -6,7 +6,6 @@ const {
   Promotion,
   Property,
   Supplier,
-  Promotion,
 } = require('../../models');
 const { Op } = require('sequelize');
 
