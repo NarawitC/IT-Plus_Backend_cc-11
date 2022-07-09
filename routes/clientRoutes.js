@@ -12,6 +12,7 @@ const clientSupplierRouter = require('./client/clientSupplierRoutes');
 const clientOrderRouter = require('./client/clientOrderRoutes');
 const clientPurchasedOrderRouter = require('./client/clientPurchasedOrderRoutes');
 const clientTransactionRouter = require('./client/clientTransactionRoutes');
+const clientPromotionRouter = require('./client/clientPromotionRoutes');
 
 router.use('/auth', clientAuthRouter);
 router.use('/client', clientAuthenticate, clientRouter);
@@ -23,5 +24,6 @@ router.use('/supplier', clientAuthenticate, clientSupplierRouter);
 router.use('/order', clientAuthenticate, clientOrderRouter);
 router.use('/purchased-order', clientAuthenticate, clientPurchasedOrderRouter);
 router.use('/transaction', clientAuthenticate, clientTransactionRouter);
+router.use('/promotion', clientAuthenticate, clientPromotionRouter);
 
 module.exports = router;
