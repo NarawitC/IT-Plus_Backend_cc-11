@@ -19,13 +19,19 @@ exports.getApprovedPromotionProduct = async (req, res, next) => {
           include: [
             { model: Category },
             { model: SubCategory },
-            { model: Supplier },
+            { model: Promotion },
+            {
+              model: Supplier,
+              attributes: {
+                exclude: ['password'],
+              },
+            },
           ],
         },
       ],
     });
     res.status(200).json({
-      message: 'Get all approved promotion  product successfully',
+      message: 'Get all approved promotion product successfully',
       promotionProducts,
     });
   } catch (err) {
