@@ -11,22 +11,25 @@ const { Op } = require('sequelize');
 
 exports.getApprovedPromotionProduct = async (req, res, next) => {
   try {
-    const promotionProducts = await Promotion.findAll({
+    const presentDate = new Date();
+    const promotion = await Promotion.findAll({
+      where: {
+        startedAt: { [Op.lte]: presentDate },
+        endedAt: { [Op.gte]: presentDate },
+      },
+    });
+    const productIds = promotion.map((item) => item.productId);
+    const promotionProducts = await Product.findAll({
+      where: { id: productIds, status: PRODUCT_STATUS.APPROVED },
       include: [
+        { model: Category },
+        { model: SubCategory },
+        { model: Promotion },
         {
-          model: Product,
-          where: { status: PRODUCT_STATUS.APPROVED },
-          include: [
-            { model: Category },
-            { model: SubCategory },
-            { model: Promotion },
-            {
-              model: Supplier,
-              attributes: {
-                exclude: ['password'],
-              },
-            },
-          ],
+          model: Supplier,
+          attributes: {
+            exclude: ['password'],
+          },
         },
       ],
     });
